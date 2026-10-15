@@ -321,6 +321,18 @@ public class WindowManagerProxy {
     }
 
     /**
+     * Returns pixel size of taskbar_size if available; 0 on ROMs missing the
+     * compiled resource (e.g. Android 8.0 stock launchers without it).
+     */
+    protected int getTaskbarSizeSafely(Context context) {
+        try {
+            return context.getResources().getDimensionPixelSize(R.dimen.taskbar_size);
+        } catch (android.content.res.Resources.NotFoundException e) {
+            return 0;
+        }
+    }
+
+    /**
      * Returns a list of possible WindowBounds for the display keyed on the 4 surface rotations
      */
     protected List<WindowBounds> estimateWindowBounds(Context context,
@@ -353,12 +365,12 @@ public class WindowManagerProxy {
 
         navBarHeightPortrait = isTablet
                 ? (mTaskbarDrawnInProcess
-                        ? 0 : context.getResources().getDimensionPixelSize(R.dimen.taskbar_size))
+                        ? 0 : getTaskbarSizeSafely(context))
                 : getDimenByName(systemRes, NAVBAR_HEIGHT);
 
         navBarHeightLandscape = isTablet
                 ? (mTaskbarDrawnInProcess
-                        ? 0 : context.getResources().getDimensionPixelSize(R.dimen.taskbar_size))
+                        ? 0 : getTaskbarSizeSafely(context))
                 : (isTabletOrGesture
                         ? getDimenByName(systemRes, NAVBAR_HEIGHT_LANDSCAPE) : 0);
         navbarWidthLandscape = isTabletOrGesture

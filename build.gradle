@@ -24,13 +24,13 @@ allprojects {
         android {
             buildToolsVersion "37.0.0"
             compileSdk {
-                version = release(37) {
-                    minorApiLevel = 2
+                version = release(36) {
+                    minorApiLevel = 0
                 }
             }
             defaultConfig {
-                minSdk = 26
-                targetSdk = 37
+                minSdk = 21
+                targetSdk = 27
                 vectorDrawables.useSupportLibrary = true
             }
             lint {
@@ -263,7 +263,7 @@ android {
 
         withQuickstep {
             dimension "recents"
-            minSdk = 26
+            minSdk = 21
         }
 
         github {
